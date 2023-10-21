@@ -1,0 +1,66 @@
+#include<bits/stdc++.h>
+using namespace std;
+int N = 1000000;
+bool sieve[1000001];
+void createSieve(){
+    for(int i = 2;i<=N;i++){
+        sieve[i] = true;
+    }
+    for(int i = 2;i*i<=N;i++){
+        if(sieve[i]==true){
+           for(int j = i*i;j<=N;j+=i){
+            sieve[j] = false;
+        } 
+        }
+    }
+}
+
+// returns all the prime no. till val = sqrt(r)
+vector<int> generatePrime(int val){
+    vector<int> ds;
+    for(int i = 2;i<=val;i++){
+        if(sieve[i]==true){
+            ds.push_back(i);
+        }
+    }
+    return ds;
+}
+int main(){
+
+    // finds all the prime no. upto (N<=10^6)
+    createSieve();
+
+    int t;
+    cin>>t;
+    while(t--){
+        int l , r;
+        cin>>l>>r;
+        vector<int> primes = generatePrime(sqrt(r));
+        int dummy[r-l+1];
+
+        // declaring all numbers from l(dummy[0]) to r(dummy[r-l]) as true
+        for(int i = 0;i<r-l+1;i++){
+            dummy[i] = 1;
+        }
+
+        //finding all the primes between l and r
+        for(auto pr:primes){
+
+            //finding first multiple of pr between l and r
+            int firstMultiple = ((l/pr)*pr);
+            if(firstMultiple < l) firstMultiple += pr;
+            
+            //marking all multiples of pr between l and r as false
+            for(int j = max(firstMultiple , pr*pr);j<=r;j+=pr){
+                dummy[j-l] = false;
+            }
+        }
+        for(int i = l;i<=r;i++){
+            if(dummy[i-l]==true){
+                cout<<i<<" ";
+            }
+        }
+        cout<<endl;
+    }
+    return 0;
+}

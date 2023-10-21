@@ -1,0 +1,113 @@
+#include<bits/stdc++.h>
+#include <ext/pb_ds/assoc_container.hpp>
+using namespace __gnu_pbds;
+using namespace std;
+ 
+#define ff              first
+#define ss              second
+#define ll              long long          
+#define ps(x,y)         fixed<<setprecision(y)<<x
+#define w(t)            int t; cin>>t; while(t--)
+mt19937                 rng(chrono::steady_clock::now().time_since_epoch().count());
+ 
+typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
+ 
+ 
+void ip_op()
+{
+    ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#ifndef ONLINE_JUDGE
+    freopen("input.txt", "r", stdin);
+    freopen("output.txt", "w", stdout);
+#endif
+}
+
+class Node{
+public:
+    int data;
+    Node* next;
+    Node(int value){
+        data = value;
+        next = NULL;
+    }
+};
+Node* middleNode(Node* head){
+    Node* curr = head;
+    if(curr == NULL){
+        return NULL;
+    }
+
+    // METHOD 1  (NAIVE)
+
+    //this case is already handled
+    // else if(curr->next == NULL) return curr;
+    // int cnt = 1;
+    // while(curr->next!=NULL){
+    //     cnt++;
+    //     curr = curr->next;
+    // }
+    // int n = (cnt/2) + 1;
+    // curr = head;
+    // while(n!=1){
+    //     curr = curr->next;
+    //     n--;
+    // }
+    // return curr;
+
+    // METHOD 2(I)(WITHOUT USING SLOW AND FAST)
+
+    // int cnt = 1;
+    // Node* slow = head;
+    // Node* fast = head;
+    // while(curr->next!=NULL){
+    //     cnt++;
+    //     curr = curr->next;
+    // }
+    // if(cnt&1){
+    //     while(fast->next!=NULL){
+    //         slow = slow->next;
+    //         fast = fast->next->next;
+    //     }
+    // }
+    // else{
+    //     while(fast!=NULL){
+    //         slow = slow->next;
+    //         fast = fast->next->next;
+    //     }
+    // }
+
+
+    // ---------------OR-------------------
+
+    // METHOD 2(II) (USING SLOW AND FAST POINTERS)
+
+    Node* slow = head;
+    Node* fast = head;
+    while(fast!=NULL && fast->next != NULL){          // ** to find first middle in even ll use fast->next->next!=NULL instead of fast!=NULL **
+        slow = slow->next;                            // here finding second middle element
+        fast = fast->next->next;
+    }
+    return slow;
+}
+
+ void printNode(Node* node){
+    cout<<node->data<<" ";
+ }
+int main()
+{
+    ip_op();
+    Node* head = new Node(10);
+    Node* second = new Node(20);
+    head->next = second;
+    Node* third = new Node(30);
+    second->next = third;
+    Node* forth = new Node(40);
+    third->next = forth;
+    Node* fifth = new Node(50);
+    forth->next = fifth;
+    Node* sixth = new Node(60);
+    fifth->next = sixth;
+    Node* node = middleNode(head);
+    printNode(node);
+    return 0;
+}

@@ -1,0 +1,55 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int main()
+{
+    int n , k;
+    cin>>n>>k;
+    vector<int> vec(n);
+    for(int i = 0;i < n;i++){
+        cin>>vec[i];
+    }    
+    int i = 0 , j = 0 ;
+
+    queue<int>q;
+
+    vector<int>answer;
+
+    while(j < vec.size()){
+
+       //calculations
+
+        if(vec[j] < 0){
+            q.push(vec[j]);
+        }
+
+    if(j-i+1 < k){
+        j++;
+    }
+
+    else if(j-i+1 == k){
+     // calcualte answer
+        if(q.empty()){
+            answer.push_back(0);
+            
+        }
+
+    // slide window
+
+       else{
+        answer.push_back(q.front());
+        if(q.front()==vec[i]){
+            q.pop();
+        }
+       }
+       i++;
+       j++;
+    }
+
+    }
+
+    for(auto it : answer){
+        cout<<it<<" ";
+    }
+   
+}

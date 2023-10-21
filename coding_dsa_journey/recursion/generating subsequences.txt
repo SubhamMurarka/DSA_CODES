@@ -1,0 +1,33 @@
+
+#include <bits/stdc++.h>
+using namespace std;
+void printF(int ind , int n , vector<int>&ds , vector<int>&arr){
+    if(ind>=n){
+        if(ds.size()==0)cout<<"{ }";
+        for(auto it:ds) cout<<it<<" ";
+        cout<<endl;
+        return;
+    }
+
+    //PICKING UP THE ELEMENTS AT FIRST (at arr[ind])
+
+    ds.push_back(arr[ind]);
+    printF(ind+1 , n , ds , arr);
+
+    // NOT PICKING THE ELEMENT AT arr[ind]
+
+    ds.pop_back();
+    printF(ind+1 , n , ds , arr);
+}
+
+int main() {
+    int n; cin>>n;
+    vector<int>ds;
+    vector<int>arr;
+    for(int i = 0; i<n; i++) {
+        int x; cin>>x;
+        arr.push_back(x);
+    }
+    printF(0,n,ds,arr);
+    return 0;
+}

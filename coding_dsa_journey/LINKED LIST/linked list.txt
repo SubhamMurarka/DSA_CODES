@@ -1,0 +1,117 @@
+#include<bits/stdc++.h>
+using namespace std;
+class Node{
+public:
+    int data;
+    Node* next;
+    Node(int value){
+        data  = value;
+        next = NULL;
+    }
+};
+
+// deleting first node of singly linked list
+
+Node* deleteNode(Node* head){
+    if(head==NULL){
+        return NULL;
+    }
+    else{
+        Node* temp = head->next;
+        delete(head);
+        return temp;
+    }
+
+}
+
+// deleting last node (tail) of singly linked-last T:c = "O(n)"
+// dont break conncetion from current.
+
+Node* deleteTail(Node* head){
+ if(head==NULL){
+    return NULL;
+ }
+ else{
+    Node* curr = head;
+    // Node* temp = NULL;
+    while(curr->next->next!=NULL){
+        // temp = curr;
+        curr = curr->next;
+    }
+    // cout<<curr->data<<endl;
+    delete(curr->next);
+    curr->next=NULL;
+    // cout<<curr->data<<endl;
+    // temp->next=NULL;
+     return head;
+ }
+
+}
+
+//inserting at a given position
+
+Node* insertAnyWhere(Node*head , int pos , int val){
+         if( pos == 1 ){
+            Node* temp = new Node(val);
+            temp->next = head;
+            return temp;
+        }
+        /*else if(pos == 5){
+            Node* temp = new Node(val);
+            Node* curr = head;
+            while(curr->next!=NULL){
+                curr = curr->next;
+            }
+            curr->next = temp;
+            temp->next = NULL;
+            return head;
+        }*/
+        else{
+            int cnt = 0;
+            Node* temp = new Node(val);
+            Node* curr = head;
+            // Node* last = NULL;
+            while(cnt!=(pos-2) && curr!=NULL){
+                curr = curr->next;
+                cnt++;
+            }
+            if(curr==NULL){
+                return head;
+            }
+            temp->next = curr->next;
+            curr->next = temp;
+            // last = curr->next;
+            // curr->next = temp;
+            // temp->next = last;
+            return head;
+        }
+    
+}
+
+// traversing singly linked-list
+
+void printNode(Node* head){
+    while(head!=NULL){
+        cout<<head->data<<" ";
+        head = head->next;
+    }
+    cout<<endl;
+}
+int main(){
+    Node* head = NULL;
+     head = insertAnyWhere(head , 2 , 39);
+    // Node* head = new Node(10);
+    // Node* second = new Node(20);
+    // head->next = second;
+    // Node* third = new Node(30);
+    // second->next = third;
+    // Node* forth = new Node(40);
+    // third->next = forth;
+    // printNode(head);
+    // // head=deleteNode(head);
+    // // printNode(head);
+    // // head = deleteTail(head);
+    // head = insertAnyWhere(head , 6 , 59);
+    printNode(head);
+    return 0;
+}

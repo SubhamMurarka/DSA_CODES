@@ -1,0 +1,65 @@
+#include<bits/stdc++.h>
+using namespace std;
+ 
+// RECURSIVELY FINDING POWER(A , B) BINARY EXPONENTIATION
+int binExpRec(int a , int b){
+    if(b==0) return 1;                                                                             -----------------------------------------------------------------------------------------------
+    int temp = binExpRec(a,b/2);                                                           |  NOTE : PREFER ITERATIVE APPROACH OVER RECURSIVE | 
+    int res = temp*temp;                                                                       -----------------------------------------------------------------------------------------------
+
+    // b&1==1 => b is odd
+    // if power of b is odd. ( 3^3 = 3 * (3^2) )
+
+    if(b&1) res*=a;
+    return res;
+}
+
+// ITERATIVELY FINDING POWER(A , B) BINARY EXPONENTIATION
+// best approach
+
+int binExpIte(int a , int b){
+    int ans = 1;
+    while(b>0){    // checking decimal value of b
+        if(b&1){   
+            ans*=a;
+        }
+        a = a*a;
+        b>>=1;   
+    }
+    return ans;
+}
+
+//OTHER FUNCTIONS TO IMPLEMENT (MORE INTUTIVE)
+
+int main()
+{
+    ip_op();
+    int a ,b;
+    cin>>a>>b;
+    int ans = 1;
+    while(b>0){
+    if(b&1){
+        ans = ans*a;
+        b--;
+    }
+    else{
+        a = a*a;
+        b = b>>1;
+    }
+    }
+    cout<<ans<<" ";
+    return 0;
+}
+
+// IF ASKED (a^b % p)
+
+then ans = (ans*a)%p;
+       a = (a*a)%p;
+
+int main(){
+int a , b;
+cin>>a>>b;
+int ans = binExpIte(a , b);
+cout<<ans;
+return 0;
+}

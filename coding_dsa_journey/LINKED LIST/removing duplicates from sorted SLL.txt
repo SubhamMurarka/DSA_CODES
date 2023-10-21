@@ -1,0 +1,95 @@
+#include<bits/stdc++.h>
+#include <ext/pb_ds/assoc_container.hpp>
+using namespace __gnu_pbds;
+using namespace std;
+ 
+#define ff              first
+#define ss              second
+#define ll              long long          
+#define ps(x,y)         fixed<<setprecision(y)<<x
+#define w(t)            int t; cin>>t; while(t--)
+mt19937                 rng(chrono::steady_clock::now().time_since_epoch().count());
+ 
+typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
+ 
+ 
+void ip_op()
+{
+    ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#ifndef ONLINE_JUDGE
+    freopen("input.txt", "r", stdin);
+    freopen("output.txt", "w", stdout);
+#endif
+}
+
+class Node{
+public:
+    int data;
+    Node* next;
+    Node(int value){
+        data = value;
+        next = NULL;
+    }
+};
+
+Node* removeDupli(Node* head){
+    Node* curr = head;
+    // if(curr == NULL){
+    //     return NULL;
+    // }
+    // set<int>st;
+    // while(curr!=NULL){
+    //     st.insert(curr->data);
+    //     curr = curr->next;
+    // }
+    // curr = head;
+    // Node* prev = NULL;
+    // for(auto it:st){
+    //     curr->data = it;
+    //     prev = curr;
+    //     curr = curr->next;
+    // }
+    // prev->next = NULL;
+    // return head;
+
+    // METHOD 2 (REMOVING DUPLICATE DATA NODES)
+
+    while(curr!=NULL && curr->next!=NULL){ // BOTH CONDIT. SHOULD BE SATISFIED
+        if(curr->data == curr->next->data){
+            Node* temp = curr->next;   // TO AVOID MEMORY LEAKAGE 
+            curr->next = curr->next->next;
+            delete(temp);       // TO AVOID MEMORY LEAKAGE 
+        }
+        else{
+            curr = curr->next;
+        }
+    }
+    return head;  // NOT HAVE TO MODIFY HEAD BECAUSE CURR IS NEVER CHANGED,CURR->NEXT IS CHANGED
+}
+
+
+
+void printNode(Node* head){
+    Node* curr = head;
+    while(curr!=NULL){
+        cout<<curr->data<<" ";
+        curr = curr->next;
+    }
+}
+ 
+int main()
+{
+    ip_op();
+    Node* head = new Node(10);
+    Node* second = new Node(20);
+    head->next = second;
+    Node* third = new Node(20);
+    second->next = third;
+    Node* forth = new Node(20);
+    third->next = forth;
+    Node* fifth = new Node(50);
+    forth->next = fifth;
+    head = removeDupli(head);
+    printNode(head);
+    return 0;
+}

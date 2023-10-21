@@ -1,0 +1,70 @@
+#include<bits/stdc++.h>
+using namespace std;
+class Node{
+    public:
+    int data;
+    Node* next;
+    Node* prev;
+    Node(int value){
+        data = value;
+        next = NULL;
+        prev = NULL;
+    }
+};
+
+// INSERTING AT BEGINING OF CIRCULAR DOUBLY LL
+
+// SIMILARLY FOR INSERTING AT END(2)
+
+Node* insertBegin(Node* head , int value){
+    Node* temp = new Node(value);
+    if(head==NULL){
+        temp->next = temp;
+        temp->prev = temp;
+        return temp; //(2) CHANGE TEMP TO HEAD i.e. return head;
+    }
+    // METHOD-1
+    
+    // Node* previous =  head->prev;
+    // previous->next = temp;
+    // temp->next = head;
+    // head->prev = temp;
+    // temp->prev = previous;
+    
+    // METHOD-2
+    
+    temp->prev = head->prev;
+    temp->next = head;
+    head->prev->next = temp;
+    head->prev = temp;
+    return temp;//(2) CHANGE TEMP TO HEAD i.e. return head;
+}
+
+// TRAVERSING CIRCULAR DOUBLY LL
+
+void printNode(Node* head){
+    Node* curr = head;
+    cout<<curr->data<<" ";
+    curr = curr->next;
+    while(curr!=head){
+        cout<<curr->data<<" ";
+        curr = curr->next;
+    }
+}
+int main(){
+    Node* head = new Node(10);
+    Node* second = new Node(20);
+    head->next = second;
+    second->prev = head;
+    Node* third = new Node(30);
+    second->next = third;
+    third->prev = second;
+    Node* forth = new Node(40);
+    third->next = forth;
+    forth->prev = third;
+    forth->next = head;
+    head->prev = forth;
+    head = insertBegin(head , 50);
+    printNode(head);
+    return 0;
+}

@@ -1,0 +1,106 @@
+#include<bits/stdc++.h>
+#include <ext/pb_ds/assoc_container.hpp>
+using namespace __gnu_pbds;
+using namespace std;
+ 
+#define ff              first
+#define ss              second
+#define ll              long long          
+#define ps(x,y)         fixed<<setprecision(y)<<x
+#define w(t)            int t; cin>>t; while(t--)
+mt19937                 rng(chrono::steady_clock::now().time_since_epoch().count());
+ 
+typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
+ 
+ 
+void ip_op()
+{
+    ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#ifndef ONLINE_JUDGE
+    freopen("input.txt", "r", stdin);
+    freopen("output.txt", "w", stdout);
+#endif
+}
+
+class Node{
+public:
+    int data;
+    Node* next;
+    Node(int value){
+        data = value;
+        next = NULL;
+    }
+};
+Node* nodeFromEnd(Node* head , int n){
+    //METHOD 1 (NAIVE APPROACH)
+
+    // ALREADY HANDELED IN ** STEP
+
+    // Node* curr = head;
+    // if(curr == NULL){
+    //     return NULL;
+    // }
+
+
+    //finding size of the LL
+    // int size = 1;
+    // while(curr->next!=NULL){
+    //     curr=curr->next;
+    //     size++;
+    // }
+    // curr = head;
+    // int pos  = size-n+1;
+
+    // if(n>size) return NULL;  // ** STEP
+
+    // while(pos!=1 && curr!=NULL){
+    //     curr = curr->next;
+    //     pos--;
+    // }
+    // return curr;
+
+    // METHOD 2 (WITHOUT FINDING THE LENGTH OF THE LL) NOTE: SAME T.C. AS METHOD 1.
+
+    if(head==NULL) return NULL;
+    int t = n;
+    Node* first = head;
+    Node* second = head;
+    while(t!=0){
+            first = first->next;
+            t--;
+            if(first==NULL && t>0){
+                return NULL;
+            }
+        }
+  
+    while(first!=NULL ){
+        first = first->next;
+        second = second->next;
+
+    }
+    return second;
+}
+
+ void printNode(Node* nod){
+    cout<<nod->data<<" ";
+ }
+int main()
+{
+    ip_op();
+    int n;
+    cin>>n;
+    Node* head = new Node(10);
+    Node* second = new Node(20);
+    head->next = second;
+    Node* third = new Node(30);
+    second->next = third;
+    Node* forth = new Node(40);
+    third->next = forth;
+    Node* fifth = new Node(50);
+    forth->next = fifth;
+    Node* sixth = new Node(60);
+    fifth->next = sixth;
+    Node* node = nodeFromEnd(head,n);
+    printNode(node);
+    return 0;
+}

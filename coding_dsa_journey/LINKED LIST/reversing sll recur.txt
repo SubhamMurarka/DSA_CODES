@@ -1,0 +1,100 @@
+#include<bits/stdc++.h>
+#include <ext/pb_ds/assoc_container.hpp>
+using namespace __gnu_pbds;
+using namespace std;
+ 
+#define ff              first
+#define ss              second
+#define ll              long long          
+#define ps(x,y)         fixed<<setprecision(y)<<x
+#define w(t)            int t; cin>>t; while(t--)
+mt19937                 rng(chrono::steady_clock::now().time_since_epoch().count());
+ 
+typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
+ 
+ 
+void ip_op()
+{
+    ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#ifndef ONLINE_JUDGE
+    freopen("input.txt", "r", stdin);
+    freopen("output.txt", "w", stdout);
+#endif
+}
+
+class Node{
+public:
+    int data;
+    Node* next;
+    Node(int value){
+        data = value;
+        next = NULL;
+    }
+};
+
+
+
+Node* reverseLl(Node* head , Node* prev){
+
+    // METHOD - 1 : REVERSING SINGLY LINKED LIST ITERATIVELY
+
+    // Node* curr = head;
+    // if(curr->next==NULL){
+    //     return curr;
+    // }
+    // Node* prev = NULL;
+    // Node* Next = NULL;
+    // while(curr!=NULL){
+    //     Next = curr->next; //STORING NEXT NODE BEFORE BREAKING THE LINK
+    //     curr->next = prev;
+    //     prev = curr;  // 1
+    //     curr = Next;  // 2
+    // }
+    // return prev;
+-----------------------------------------------------------------------------------
+    // METHOD - 2 : REVERSING SINGLY LL RECURSSIVELY FROM (RIGHT TO LEFT)
+
+    // if(head->next == NULL || head==NULL){
+    //     return head;
+    // }
+    // Node* rest_head = reverseLl(head->next);  // RETURNS LAST NODE AS HEAD
+    // Node* rest_tail = head->next;   // GET THE HOLD OF REST_TAIL OR NODE NEXT TO HEAD
+    // rest_tail->next = head;      // CHANGING THE LINK BETWEEN TWO NODES
+    // head->next = NULL;
+    // return rest_head;
+----------------------------------------------------------------------------------------
+     // METHOD - 3 : REVERSING SINGLY LL RECURSSIVELY FROM (LEFT TO RIGHT) == ITERATIVE APPROACH
+
+    if(head == NULL){
+        return prev;
+    }
+    Node* next = head->next;
+    head->next = prev;
+    return reverseLl(next,head);
+}
+
+
+void printNode(Node* head){
+    Node* curr = head;
+    while(curr!=NULL){
+        cout<<curr->data<<" ";
+        curr = curr->next;
+    }
+}
+ 
+int main()
+{
+    ip_op();
+    Node* head = new Node(10);
+    Node* second = new Node(20);
+    head->next = second;
+    Node* third = new Node(30);
+    second->next = third;
+    Node* forth = new Node(40);
+    third->next = forth;
+    Node* fifth = new Node(50);
+    forth->next = fifth;
+    head = reverseLl(head,NULL);
+    printNode(head);
+    return 0;
+}

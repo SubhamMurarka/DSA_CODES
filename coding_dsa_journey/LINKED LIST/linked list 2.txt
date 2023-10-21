@@ -1,0 +1,48 @@
+// Online C++ compiler to run C++ program online
+#include <iostream>
+using namespace std;
+class Node{
+  public:
+  int data;
+  Node* next;
+  Node* prev;
+  Node(int value){
+      data = value;
+      next = NULL;
+      prev  = NULL;
+  }
+};
+void printNode(Node* head){
+    Node* curr = head;
+    while(curr!=NULL){
+        cout<<curr->data<<" ";
+        curr = curr->next;
+    }
+}
+Node* insertBegin(Node* head , int val){
+    Node* temp = new Node(val);
+    Node* curr = head;
+    //if head is null no need to change previous of head.
+    if(curr == NULL){
+        temp->next = head;
+        return temp;
+    }
+    else{
+        temp->next = curr;
+        curr->prev = temp;
+        return temp;
+    }
+}
+int main() {
+ Node* head = NULL;
+/* Node* second = new Node(20);
+ head->next = second;
+ second->prev = head;
+ Node* third = new Node(30);
+ second->next = third;
+ third->prev = second;*/
+ head = insertBegin(head , 40);
+ cout<<head->next<<" "<<head->prev<<endl;
+ printNode(head);
+    return 0;
+}
